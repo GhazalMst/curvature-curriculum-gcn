@@ -1,13 +1,29 @@
+# torch stack -- versions pinned to match the tested environment
 --find-links https://data.pyg.org/whl/torch-2.10.0+cu128.html
 torch==2.10.0
 torch-scatter==2.1.2
 torch-sparse==0.6.18
-GraphRicciCurvature==0.5.3.2
-matplotlib==3.10.8
-numpy==2.2.6
-pandas==2.3.3
-scikit-learn==1.7.2
-torch==2.10.0
 torch-geometric==2.7.0
 torchaudio==2.10.0
 torchvision==0.25.0
+
+# curvature computation
+GraphRicciCurvature==0.5.3.2
+networkx
+POT
+
+# data / numerics
+numpy==2.2.6
+scipy
+pandas==2.3.3
+scikit-learn==1.7.2
+
+# plotting
+matplotlib==3.10.8
+seaborn
+
+# only used by huri.py (dataset download/preprocessing), not the core
+# curvature-curriculum pipeline (main.py / data_preprocess.py / train.py)
+requests
+transformers
+tqdm
