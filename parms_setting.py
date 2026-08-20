@@ -1,0 +1,101 @@
+import argparse
+
+
+def settings():
+    parser = argparse.ArgumentParser() 
+
+    # public parameters 
+    parser.add_argument('--seed', type=int, default=5327,
+                        help='Random seed. Default is 0.')
+
+    parser.add_argument('--no-cuda', action='store_true', default=False,
+                        help='Disables CUDA training.')
+
+    parser.add_argument('--fastmode', action='store_true', default=False,
+                        help='Validate during training pass.')
+
+    parser.add_argument('--workers', type=int, default=0,
+                        help='Number of parallel workers. Default is 0.')
+
+    parser.add_argument('--aggregator', choices=['GCN'], default='GCN',
+                        help='Message passing framework adopted in CGCN. Default is GCN.')
+
+    parser.add_argument('--in_file', type=str,default='data/PPT-Ohmnet.edgelist',
+                        help='Path to data fold. e.g., data/ChCh-Miner.edgelist')
+
+    parser.add_argument('--out_file', type=str,default='result.txt',
+                        help='Path to data result file. e.g., result.txt')
+
+    parser.add_argument('--feature_type', type=str, default='position', choices=['one_hot', 'uniform', 'normal', 'position', 'curvature'],
+                        help='Initial node feature type. Default is position.')
+
+    parser.add_argument('--lr', type=float, default=5e-4,
+                        help='Initial learning rate. Default is 5e-4.')
+
+    parser.add_argument('--dropout', type=float, default=0.5,
+                        help='Dropout rate (1 - keep probability). Default is 0.5.')
+
+    parser.add_argument('--weight_decay', default=5e-4,
+                        help='Weight decay (L2 loss on parameters) Default is 5e-4.')
+
+    parser.add_argument('--batch', type=int, default=128,
+                        help='Batch size. Default is 256.')
+
+    parser.add_argument('--epochs', type=int, default=30, #100
+                        help='Number of epochs to train. Default is 30.')
+
+    parser.add_argument('--network_ratio', type=float, default=1,
+                        help='Remain links in network. Default is 1')
+
+    parser.add_argument('--loss_ratio1', type=float, default=1,
+                        help='Ratio of task1. Default is 1')
+
+    parser.add_argument('--loss_ratio2', type=float, default=0.1,
+                        help='Ratio of task2. Default is 0.1')
+
+    parser.add_argument('--loss_ratio3', type=float, default=0.1,
+                        help='Ratio of task3. Default is 0.1')
+    
+    parser.add_argument('--correlation', action='store_true', default=False,
+                       help='Compute correlation between curvature and loss. Default is False.')
+    
+    parser.add_argument('--significance', action='store_true', default=False,
+                       help='Compute if usage of curvature yields a significant improvement. Default is False.')
+    
+    parser.add_argument('--corr_significance', action='store_true', default=False,
+                       help='Compute if usage of curvature yields a significant change in correlation. Default is False.')
+    
+    parser.add_argument('--squared_significance', action='store_true', default=False,
+                       help='Compute if negative squaring of curvature yields a significant change in correlation. Default is False.')
+
+    parser.add_argument('--no_curvature', action='store_true', default=False,
+                       help='Determines that no curvature is used in the message passing process. Default is False.')
+    
+    parser.add_argument('--squared', action='store_true', default=False,
+                       help='Takes the negative square of the curavture in the message passing process. Default ist False.')
+
+    parser.add_argument('--hist_file', type=str,default='',
+                        help='Path to file where curvature histogram will be safed, e.g., hist.png')
+    
+    parser.add_argument('--scatter_file', type=str,default='',
+                        help='Path to file where loss vs curvature scatter will be safed, e.g., scatter.png')
+    
+    parser.add_argument('--hard_negatives', action='store_true', default=False,
+                        help='For neagtive examples sample especially negative edges.')
+    
+    # GCN parameters
+    parser.add_argument('--dimensions', type=int, default=128,
+                        help='dimensions of feature. Default is 128.')
+
+    parser.add_argument('--hidden1', default=64,
+                        help='Number of hidden units for encoding layer 1. Default is 64.')
+
+    parser.add_argument('--hidden2', default=32,
+                        help='Number of hidden units for encoding layer 2. Default is 32.')
+
+    parser.add_argument('--decoder1', default=512,
+                        help='Number of hidden units for decoding layer 1. Default is 512.')
+
+    args = parser.parse_args()
+
+    return args
